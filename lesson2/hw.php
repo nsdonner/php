@@ -186,7 +186,7 @@ function rudate()
 
     $min = date('i');
     if ($min == 1 || $min % 10 == 1) $m = 'а';
-    elseif ($min == 2 || $min == 3 || $min == 4 || $min % 10 == 2 || $min % 10 == 3 || $min % 10 == 4) $m = 'ы';
+    elseif ($min == 2 || $min == 3 || $min == 4 || (($min % 10 == 2 || $min % 10 == 3 || $min % 10 == 4) && $min>20)) $m = 'ы';
     else $m = '';
     echo date('H' . ' час' . $h) . ' ' . date('i' . ' минут' . $m);
 }
