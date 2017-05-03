@@ -93,18 +93,34 @@ class SimpleImage
     }
 }
 
-function shrink($src, $h, $w)
+function shrink($src, $ssrc, $h, $w)
 {
     $image = new SimpleImage();
     $image->load($src);
     $image->resize($h, $w);
-    $image->save('s' . $src);
+    $image->save($ssrc);
 }
+
+
 $gallery = '';
 $i = 1;
 while (file_exists('img/sgood' . $i . '.jpg')) {
-    $gallery .= '<li><a href="img\good' . $i . '.jpg"' . 'target="_blank"><img src="img/sgood' . $i . '.jpg" alt=""></a></li>';
+    $gallery .= '<li><a href="img/good' . $i . '.jpg"' . 'target="_blank"><img src="img/sgood' . $i . '.jpg" alt=""></a></li>';
     $i++;
+}
+
+
+if ($_FILES) {
+    if (!($_FILES['file']['type'] == 'image/jpeg')) {
+        echo 'Допустимы только jpeg файлы';
+    } else {
+        if (move_uploaded_file($_FILES['file']['tmp_name'], 'img/good'.($i).'.jpg')) {
+            shrink('img/good' . ($i) . '.jpg', 'img/sgood' . ($i) . '.jpg', 200, 200);
+            unset($_POST);
+            header("Location: hw.php");
+
+        }
+    }
 }
 
 
@@ -123,11 +139,20 @@ while (file_exists('img/sgood' . $i . '.jpg')) {
 <div class="gal">
 
     <ul class="galul">
-             <?= $gallery ?>
+        <?= $gallery ?>
     </ul>
 
 
 </div>
+
+<br>
+<form action="hw.php" enctype="multipart/form-data" method="post">
+
+    <input type="file" name="file">
+    <input type="submit">
+
+
+</form>
 
 
 </body>
