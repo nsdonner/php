@@ -113,8 +113,11 @@ while (file_exists('img/sgood' . $i . '.jpg')) {
 if ($_FILES) {
     if (!($_FILES['file']['type'] == 'image/jpeg')) {
         echo 'Допустимы только jpeg файлы';
+    } elseif(!($_FILES['file']['size'] > 5000000)) {
+        echo 'Файл должен быть не больше 5Мбайт';
     } else {
         if (move_uploaded_file($_FILES['file']['tmp_name'], 'img/good'.($i).'.jpg')) {
+
             shrink('img/good' . ($i) . '.jpg', 'img/sgood' . ($i) . '.jpg', 200, 200);
             unset($_POST);
             header("Location: hw.php");
