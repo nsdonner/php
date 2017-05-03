@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.galul{
+    list-style: none;
+    float: left;
+    display: block;
+}
+
+.galul li{
+    float: left;
+    display: block;
+    }
+
+.galul li img{
+    width: 200px;
+    height: 200px;
+}
