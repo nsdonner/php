@@ -1,0 +1,22 @@
+* {
+    margin: 0 auto;
+    text-align: center;
+    padding: 0;
+}
+
+
+.galul{
+    list-style: none;
+
+}
+
+.galul li{
+    float: left;
+    display: block;
+    }
+
+/*
+.galul li img{
+    width: 200px;
+    height: 200px;
+}*/

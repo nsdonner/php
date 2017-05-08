@@ -8,7 +8,12 @@
 
 
 <?php
+$link = mysqli_connect("localhost", "root", "", "gallery");
+$result = mysqli_query($link,"SELECT * FROM pics WHERE id > 0 ORDER BY `clicks` DESC");
 
+$epms = array();
+while($row = mysqli_fetch_assoc($result))
+    $epms[] = $row;
 
 
 
@@ -105,24 +110,31 @@ function shrink($src, $ssrc, $h, $w)
 
 
 $gallery = '';
-$i = 1;
+$i=0;
+
+foreach ($epms as $id => $value){
+    $picsrc=$epms[$id]["path"];
+    $spicsrc=$epms[$id]["spath"];
+    $gallery .= '<li><a href="pic.php?pic='.$epms[$id]["id"].'"target="_blank"><img src="'. $spicsrc .'" alt=""></a></li>';
+    $i++;
+    }
 
 
-while (file_exists('img/sgood' . $i . '.jpg')) {
+/*while (file_exists('img/sgood' . $i . '.jpg')) {
     $gallery .= '<li><a href="img/good' . $i . '.jpg"' . 'target="_blank"><img src="img/sgood' . $i . '.jpg" alt=""></a></li>';
     $i++;
-}
+}*/
 
 
 if ($_FILES) {
     if (!($_FILES['file']['type'] == 'image/jpeg')) {
         echo 'Допустимы только jpeg файлы';
-    } elseif(!($_FILES['file']['size'] > 5000000)) {
-        echo 'Файл должен быть не больше 5Мбайт';
-    } else {
-        if (move_uploaded_file($_FILES['file']['tmp_name'], 'img/good'.($i).'.jpg')) {
 
-            shrink('img/good' . ($i) . '.jpg', 'img/sgood' . ($i) . '.jpg', 200, 200);
+    } else {
+        if (move_uploaded_file($_FILES['file']['tmp_name'], 'img/good'.($i+1).'.jpg')) {
+
+            shrink('img/good' . ($i+1) . '.jpg', 'img/sgood' . ($i+1) . '.jpg', 200, 200);
+            $result = mysqli_query($link,"INSERT INTO `pics` (`id`, `path`, `spath`, `clicks`) VALUES (NULL, 'img/good".($i+1).".jpg', 'img/sgood".($i+1).".jpg', '0')");
             unset($_POST);
             header("Location: hw.php");
 
@@ -133,7 +145,7 @@ if ($_FILES) {
 
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
