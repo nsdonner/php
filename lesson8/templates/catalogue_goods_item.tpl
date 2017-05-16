@@ -8,6 +8,6 @@
         <button type="submit" name="id_good" value="{{ID_GOOD}}">Купить</button>
     </form>
 
-
+    <p class='buyme' id='good_{{ID_GOOD}}'>Купить</p>
 
 </div>

@@ -86,11 +86,17 @@ function prepareVariables($page_name, $action = ""){
             else
                 $vars['response'] = doActionWithBasket($action);
 
+            if (isset($_POST['id_basket'])){
+                doActionWithBasket('remove');
+                header("Location: " . '/basket/');
+            }
+
+
             break;
         case "catalogue":
-            print_r($_POST);
+
             if (isset($_POST['id_good'])){
-                echo doActionWithBasket('add');
+                doActionWithBasket('add');
             }
             prepareCataloguePage($vars);
             break;

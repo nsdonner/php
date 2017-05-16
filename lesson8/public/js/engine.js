@@ -39,5 +39,35 @@ $(document).ready(function(){
             dataType : "json"
         })
     });
+
+    $('.good').on('click', function(){
+        var good_name = $('#good_name').value;
+        var good_description = $('#good_description').value;
+        var good_price = $('#good_price').value;
+
+        console.log(good_price,'!!!');
+
+
+       /* $.ajax({
+            url: "/basket/add/",
+            type: "POST",
+            data:{
+                id_good: id_good,
+                quantity: 1
+            },
+            error: function() {alert("Что-то пошло не так...");},
+            success: function(answer){
+                if(answer.result == 1)
+                    alert("Товар добавлен в корзину!");
+                else
+                    alert("Что-то пошло не так...");
+            },
+            dataType : "json"
+        })*/
+    });
+
+
+
+
 });
 
